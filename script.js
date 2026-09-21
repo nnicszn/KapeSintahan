@@ -219,7 +219,7 @@ function renderApp() {
     grid.innerHTML = '';
 
     if (items.length === 0) {
-      grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 20px;">Walang nahanap na menu item.</p>`;
+      grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center; padding: 20px;">No Menu Found.</p>`;
     } else {
       items.forEach(item => {
         const draftQty = state.draftQuantities[item.id] || 1;
@@ -288,7 +288,7 @@ function renderApp() {
 
     const cartEntries = Object.entries(state.cart);
     if (cartEntries.length === 0) {
-      cartList.innerHTML = `<p style="text-align:center; color:#888;">Walang laman ang iyong order cart.</p>`;
+      cartList.innerHTML = `<p style="text-align:center; color:#888;">No Item in your Cart.</p>`;
     } else {
       cartEntries.forEach(([itemId, entry]) => {
         const itemRow = document.createElement('div');
@@ -319,12 +319,12 @@ function renderApp() {
 function handlePlaceOrder() {
   const { totalCount, totalPrice } = getCartTotals();
   if (totalCount === 0) {
-    alert('Pumili muna ng items sa Menu bago mag-place ng order!');
+    alert('Choose Item before Checking Out!');
     return;
   }
 
   if (state.orderMode === 'Delivery' && !state.deliveryAddress.trim()) {
-    alert('Paki-lagay ang iyong Delivery Address!');
+    alert('Input your Delivery Address!');
     return;
   }
 
