@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kape Sintahan - Order System</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header role="banner">
+    <div class="header-container">
+      <div class="brand-row">
+        <h1 class="brand-title">Kape Sintahan</h1>
+        <!-- Hamburger Menu Button -->
+        <button type="button" class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
+          ☰
+        </button>
+      </div>
+      
+      <nav id="nav-menu" aria-label="Main Navigation">
+        <button type="button" class="nav-btn active" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'HOME' })">Home</button>
+        <button type="button" class="nav-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ABOUT' })">About</button>
+        <button type="button" class="nav-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'MENU' })">Menu</button>
+        <button type="button" class="nav-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ORDER' })">Order <span id="nav-cart-count">(0)</span></button>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="page-home" class="page-content active">
+      <div class="hero-card">
+        <h2>Welcome to Kape Sintahan!</h2>
+        <p>welcome bitches, alis na kayo</p>
+        <button type="button" class="primary-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'MENU' })">View Menu</button>
+      </div>
+    </section>
+
+    <section id="page-about" class="page-content">
+      <div class="info-card">
+        <h2>About Kape Sintahan</h2>
+        <p>puwede ng mangarap</p>
+      </div>
+    </section>
+
+    <section id="page-menu" class="page-content">
+      
+      <div class="menu-header-row">
+        <h2>Kape Sintahan Menu</h2>
+        
+        <div class="sort-dropdown-container">
+          <label for="sort-select">SortBy: </label>
+          <select id="sort-select" class="sort-dropdown" onchange="dispatch({ type: 'SET_SORT_OPTION', payload: this.value })">
+            <option value="bestSeller">Best Sellers</option>
+            <option value="priceLowHigh">Price: Low to High</option>
+            <option value="priceHighLow">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="menu-controls">
+        <input type="search" id="search-input" placeholder="Search menu..." oninput="dispatch({ type: 'SET_SEARCH', payload: this.value })">
+        <button type="button" id="btn-fav-toggle" class="fav-filter-btn" onclick="dispatch({ type: 'TOGGLE_FAVORITES_ONLY' })">⭐ Favorites Only</button>
+      </div>
+
+      <div class="category-group">
+        <button type="button" class="cat-btn active" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'ALL' })">All Menu</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Food' })">Food</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Pastries' })">Pastries</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Drinks' })">Drinks</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Desserts' })">Desserts</button>
+      </div>
+
+      <div id="menu-grid" class="menu-grid">
+      </div>
+
+      <div id="view-orders-bar" class="view-orders-bar hidden">
+        <div>
+          <strong id="bar-items-count">0 items selected</strong>
+          <span id="bar-total-price">| Total: ₱0.00</span>
+        </div>
+        <button type="button" class="primary-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ORDER' })">View Orders & Checkout ➔</button>
+      </div>
+    </section>
+
+    <section id="page-order" class="page-content">
+      <h2>Checkout & Order Details</h2>
+
+      <div class="order-layout">
+        <div class="order-form-section">
+          
+          <div class="form-group">
+            <label for="order-mode-select"><strong>1. Mode of Order</strong></label>
+            <select id="order-mode-select" class="sort-dropdown" style="width: 100%; margin-top: 6px;" onchange="dispatch({ type: 'SET_ORDER_MODE', payload: this.value })">
+              <option value="Dine-in">Dine-in</option>
+              <option value="Takeout">Takeout</option>
+              <option value="Pick-up">Pick-up</option>
+              <option value="Delivery">Delivery</option>
+            </select>
+          </div>
+
+          <div id="delivery-address-group" class="form-group hidden">
+            <label for="delivery-address-input"><strong>Delivery Address</strong></label>
+            <textarea id="delivery-address-input" rows="2" style="margin-top: 6px;" placeholder="Enter complete delivery address..." oninput="dispatch({ type: 'SET_DELIVERY_ADDRESS', payload: this.value })"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="payment-method-select"><strong><span id="payment-step-num">2</span>. Payment Method</strong></label>
+            <select id="payment-method-select" class="sort-dropdown" style="width: 100%; margin-top: 6px;" onchange="dispatch({ type: 'SET_PAYMENT_METHOD', payload: this.value })">
+              <option value="Cash">Cash</option>
+              <option value="GCash">GCash</option>
+              <option value="Bank Account">Bank Account</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-note-input"><strong>Note to Store / Special Instructions</strong></label>
+            <textarea id="customer-note-input" rows="3" style="margin-top: 6px; width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CCC;" placeholder="E.g., Less ice on drinks, extra spoon & fork..." oninput="dispatch({ type: 'SET_CUSTOMER_NOTE', payload: this.value })"></textarea>
+          </div>
+
+          <button type="button" id="btn-place-order" class="primary-btn place-order-btn" onclick="dispatch({ type: 'PLACE_ORDER' })">Place Order</button>
+        </div>
+
+        <div class="order-summary-section">
+          <h3>Your Orders</h3>
+          <div id="cart-items-list" class="cart-items-list">
+          </div>
+          <div class="cart-total-box">
+            <span>Total Amount:</span>
+            <strong id="cart-total-amount">₱0.00</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="receipt-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="receipt-header">
+        <h2>Kape Sintahan</h2>
+        <p>Thank You for Your Order!</p>
+        <small id="receipt-date"></small>
+      </div>
+      <hr>
+      <div class="receipt-details">
+        <p><strong>Order Mode:</strong> <span id="receipt-mode"></span></p>
+        <p id="receipt-address-container" class="hidden"><strong>Address:</strong> <span id="receipt-address"></span></p>
+        <p><strong>Payment Method:</strong> <span id="receipt-payment"></span></p>
+        <p id="receipt-note-container" class="hidden"><strong>Customer Note:</strong> <span id="receipt-note"></span></p>
+      </div>
+      <hr>
+      <h4>Items Ordered:</h4>
+      <div id="receipt-items-list"></div>
+      <hr>
+      <div class="receipt-total">
+        <strong>Total Paid:</strong>
+        <strong id="receipt-total-amount">₱0.00</strong>
+      </div>
+      <button type="button" class="primary-btn back-home-btn" onclick="dispatch({ type: 'CLEAR_CART_AND_HOME' })">Back to Home</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
