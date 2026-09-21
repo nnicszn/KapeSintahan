@@ -1,4 +1,3 @@
-// Function to toggle Mobile Hamburger Menu
 function toggleMobileMenu() {
   const navMenu = document.getElementById('nav-menu');
   if (navMenu) {
