@@ -50,12 +50,11 @@ header {
   padding: 2px 10px;
   border-radius: 6px;
   cursor: pointer;
-  display: block; /* Visible on Mobile */
+  display: block; 
 }
 
-/* Nav Menu Drawer for Mobile */
 nav {
-  display: none; /* Hidden by default on Mobile */
+  display: none; 
   flex-direction: column;
   gap: 8px;
   width: 100%;
@@ -84,9 +83,6 @@ nav button.active {
   color: #FFF;
 }
 
-/* ============================================================================
-   3. SECTIONS & HERO CARDS
-   ============================================================================ */
 .page-content {
   display: none;
 }
