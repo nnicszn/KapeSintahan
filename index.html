@@ -1,0 +1,334 @@
+<!-- UNIT 1 -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kape Sintahan - Order System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header role="banner">
+    <div class="header-container">
+      <div class="brand-row">
+        <div>
+          <h1 class="brand-title">KAPE SINTAHAN</h1>
+          <h6 style="font-family: 'Playfair Display', serif !important; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; margin-top: -4px;">DIGITAL KIOSK</h6>
+        </div>
+        
+        <button type="button" class="hamburger-btn" id="hamburger-btn" onclick="toggleMobileMenu()" aria-label="Toggle Navigation">
+          ☰
+        </button>
+      </div>
+      
+      <nav id="nav-menu" aria-label="Main Navigation">
+        <button type="button" class="nav-btn active" data-page="HOME" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'HOME' })">Home</button>
+        <button type="button" class="nav-btn" id="nav-btn-about" data-page="ABOUT" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ABOUT' })">About</button>
+        <button type="button" class="nav-btn" data-page="MENU" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'MENU' })">Menu</button>
+        <button type="button" class="nav-btn" id="nav-btn-order" data-page="ORDER" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ORDER' })">Order <span id="nav-cart-count">(0)</span></button>
+        <!-- Dynamic Admin Navigation Buttons -->
+        <button type="button" class="nav-btn hidden" id="nav-btn-kitchen" data-page="KITCHEN" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'KITCHEN' })">Kitchen Queue</button>
+        <button type="button" class="nav-btn hidden" id="nav-btn-admin" data-page="ADMIN" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ADMIN' })">Pending Orders</button>
+      </nav>
+      <!-- UNIT 7 -->
+        <div class="role-bar">
+          <label for="role-select">User Role:</label>
+          <select id="role-select" onchange="switchUserRole(this.value)">
+              <option value="CUSTOMER" selected> Customer View </option>
+              <option value="ADMIN"> Admin View </option>
+          </select>
+          <span id="role-badge" class="badge status-pending">CUSTOMER</span>
+        </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="page-home" class="page-content active">
+      <div class="hero-card">
+        <img src="images/header.jpg" alt="Kape Sintahan Hero Banner" class="banner" id="hero-image">
+        <div class="text-overlay">
+          <div class="hero-content">
+            <span class="hero-badge">Welcome to Kape Sintahan</span>
+            <h2 class="hero-heading">Crafted Coffee & Freshly Baked Pastries</h2>
+            <p class="hero-description">Experience comfort in every cup. Warm brews, delightful pastries, and memories made daily.</p>
+            <button type="button" class="primary-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'MENU' })">View Menu</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-about" class="page-content">
+      <div class="about-wrapper">
+        <div class="about-hero">
+          <span class="about-subtitle">OUR STORY</span>
+          <h2 class="about-title">WHEN DREAMS MEET PASSION </h2>
+          <div class="about-divider"><span>☕</span></div>
+          <p class="about-intro">
+            At <strong>Kape Sintahan</strong>, we believe every memorable moment begins with warmth, comfort, and good conversation. Born out of passion for artisanal brews and heartfelt connections, our cafe is a haven where dreams are brewed and stories are shared.
+          </p>
+        </div>
+        
+        <div class="about-grid">
+          <div class="about-card">
+            <div class="about-card-icon">✨</div>
+            <h3>Puwede Nang Mangarap</h3>
+            <p>A quiet corner for your morning reflections, creative sparks, and quiet ambitions over freshly crafted coffee.</p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-icon">🍃</div>
+            <h3>Cozy Comfort</h3>
+            <p>Every single cup is brewed with carefully selected coffee beans and paired with handcrafted pastries baked with love daily.</p>
+          </div>
+
+          <div class="about-card">
+            <div class="about-card-icon">🤎</div>
+            <h3>Warm Hospitality</h3>
+            <p>A cozy digital and physical retreat designed to feel like home, whether you're catching up with friends or taking a quiet pause.</p>
+          </div>
+        </div>
+
+        <div class="quote-card">
+          <blockquote class="quote-text">
+            “Sa bawat timpla ng kape, may kuwento ng pag-ibig at pangarap na naghihintay na maipahayag.”
+          </blockquote>
+          <span class="quote-author">— Kape Sintahan Family</span>
+        </div>
+
+        <div class="store-info-grid">
+          <div class="store-info-card">
+            <h4>📍 Visit Us</h4>
+            <p>123 Anonas Street, Sta. Mesa, Manila City</p>
+          </div>
+          <div class="store-info-card">
+            <h4>⏰ Store Hours</h4>
+            <p>Monday - Sunday: 8:00 AM – 10:00 PM</p>
+          </div>
+          <div class="store-info-card">
+            <h4>💌 Connect With Us</h4>
+            <p>@kapesintahan • hello@kapesintahan.ph</p>
+          </div>
+        </div>
+
+        <div class="about-cta">
+          <p>Ready to experience comfort in every cup?</p>
+          <button type="button" class="primary-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'MENU' })">Explore Our Menu ➔</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="page-menu" class="page-content">
+      <div class="menu-header-row">
+        <h2>Kape Sintahan Menu</h2>
+        
+        <div class="sort-dropdown-container">
+          <label for="sort-select">SortBy: </label>
+          <select id="sort-select" class="sort-dropdown" onchange="dispatch({ type: 'SET_SORT_OPTION', payload: this.value })">
+            <option value="bestSeller">Best Sellers</option>
+            <option value="priceLowHigh">Price: Low to High</option>
+            <option value="priceHighLow">Price: High to Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="menu-controls">
+        <input type="search" id="search-input" placeholder="Search menu..." oninput="dispatch({ type: 'SET_SEARCH', payload: this.value })">
+        <button type="button" id="btn-fav-toggle" class="fav-filter-btn" onclick="dispatch({ type: 'TOGGLE_FAVORITES_ONLY' })">⭐ Favorites Only</button>
+      </div>
+
+      <div class="category-group">
+        <button type="button" class="cat-btn active" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'ALL' })">All Menu</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Food' })">Food</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Pastries' })">Pastries</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Drinks' })">Drinks</button>
+        <button type="button" class="cat-btn" onclick="dispatch({ type: 'SET_CATEGORY', payload: 'Desserts' })">Desserts</button>
+      </div>
+
+      <div id="menu-grid" class="menu-grid"></div>
+
+      <button type="button" id="back-to-top-btn" class="back-to-top-btn" onclick="scrollToTop()" aria-label="Back to top">
+        ↑
+      </button>
+
+      <div id="view-orders-bar" class="view-orders-bar hidden">
+        <div>
+          <strong id="bar-items-count">0 items selected</strong>
+          <span id="bar-total-price">| Total: ₱0.00</span>
+        </div>
+        <button type="button" class="primary-btn" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ORDER' })">View Orders & Checkout ➔</button>
+      </div>
+    </section>
+
+    <section id="page-order" class="page-content">
+      <h2>Checkout & Order Details</h2> 
+
+      <div class="order-layout">
+        <div class="order-form-section">
+          <div class="form-group">
+            <label for="customer-name"><strong>Customer Name</strong></label>
+            <input type="text" id="customer-name" class="sort-text" style="width: 100%; margin-top: 6px;" placeholder="Enter customer name" oninput="dispatch({ type: 'SET_CUSTOMER_NAME', payload: this.value })" required>
+          </div>
+
+          <div id="delivery-fields">
+            <div class="form-group" style="margin-top: 10px;">
+              <label for="customer-phone"><strong>Phone Number</strong></label>
+              <input type="tel" id="customer-phone" class="sort-text" style="width: 100%; margin-top: 6px;" placeholder="09123456789" oninput="dispatch({ type: 'SET_CUSTOMER_PHONE', payload: this.value })" required>
+            </div>
+          </div>
+          
+          <div class="form-group">
+            <label for="order-mode-select"><strong>1. Mode of Order</strong></label>
+            <select id="order-mode-select" class="sort-dropdown" style="width: 100%; margin-top: 6px;" onchange="dispatch({ type: 'SET_ORDER_MODE', payload: this.value })">
+              <option value="Dine-in">Dine-in</option>
+              <option value="Takeout">Takeout</option>
+              <option value="Pick-up">Pick-up</option>
+              <option value="Delivery">Delivery</option>
+            </select>
+          </div>
+
+          <div id="delivery-address-group" class="form-group hidden">
+            <label for="delivery-address-input"><strong>Delivery Address</strong></label>
+            <textarea id="delivery-address-input" rows="3" style="margin-top: 6px; width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CCC;" placeholder="Enter complete delivery address..." oninput="dispatch({ type: 'SET_DELIVERY_ADDRESS', payload: this.value })"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="payment-method-select"><strong><span id="payment-step-num">2</span>. Payment Method</strong></label>
+            <select id="payment-method-select" class="sort-dropdown" style="width: 100%; margin-top: 6px;" onchange="dispatch({ type: 'SET_PAYMENT_METHOD', payload: this.value })">
+              <option value="Cash">Cash</option>
+              <option value="GCash">GCash</option>
+              <option value="QRPH">QRPH</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="customer-note-input"><strong>Note to Store / Special Instructions</strong></label>
+            <textarea id="customer-note-input" rows="3" style="margin-top: 6px; width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #CCC;" placeholder="E.g., Less ice on drinks, extra spoon & fork..." oninput="dispatch({ type: 'SET_CUSTOMER_NOTE', payload: this.value })"></textarea>
+          </div>
+
+          <button type="button" id="btn-place-order" class="primary-btn place-order-btn" onclick="dispatch({ type: 'PLACE_ORDER' })">Place Order</button>
+        </div>
+
+        <div class="order-summary-section">
+          <h3>Your Orders</h3>
+          <div id="cart-items-list" class="cart-items-list"></div>
+          <div class="cart-total-box">
+            <span>Total Amount:</span>
+            <strong id="cart-total-amount">₱0.00</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UNIT 6: Kitchen Workflow View Page -->
+    <section id="page-kitchen" class="page-content">
+      <div class="section-header">
+        <h2>Kitchen Orders Queue & Status Workflow</h2>
+        <p>Manage order lifecycle state transitions in real time.</p>
+      </div>
+      <div id="kitchen-orders-list" class="orders-grid"></div>
+    </section>
+
+    <!-- UNIT 6 & 10: Store Admin Pending Orders Table Page -->
+    <section id="page-admin" class="page-content">
+      <div class="section-header">
+        <h2>Store Admin - Pending Customer Orders</h2>
+        <p>Overview of all orders currently waiting for confirmation or processing.</p>
+      </div>
+
+      <div class="table-container">
+        <table class="admin-orders-table">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items Ordered</th>
+              <th>Total Price</th>
+              <th>Status</th>
+              <th>Time Placed</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-pending-orders-body">
+            <!-- JS renders dynamic pending order rows here -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- DIGITAL PAYMENT MODAL -->
+  <div id="payment-modal" class="modal-overlay hidden">
+    <div class="modal-content payment-modal-content">
+      <h3 id="qr-payment-title" style="text-align: center; color: #5A3E2B;">Scan to Pay</h3>
+      <p style="text-align: center; font-size: 0.9rem; margin-top: 4px;">Amount Due: <strong id="qr-amount-display" style="color: #2D6A4F; font-size: 1.1rem;">₱0.00</strong></p>
+      
+      <div style="text-align: center; margin: 15px 0;">
+        <img id="qr-code-img" src="images/gcash.png" alt="QR Code" class="qr-code-img">
+      </div>
+
+      <div class="payment-form">
+        <div class="checkbox-group" style="margin-bottom: 12px;">
+          <input type="checkbox" id="pay-checkbox" required>
+          <label for="pay-checkbox"><strong>I have already paid</strong></label>
+        </div>
+
+        <div class="form-group" style="margin-bottom: 12px;">
+          <label for="pay-acc-number"><strong>Account / Mobile Number used:</strong></label>
+          <input type="text" id="pay-acc-number" class="sort-text" style="width: 100%; margin-top: 4px;" placeholder="09XXXXXXXXX">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+          <label for="pay-ref-number"><strong>Reference Number:</strong></label>
+          <input type="text" id="pay-ref-number" class="sort-text" style="width: 100%; margin-top: 4px;" placeholder="Enter reference number">
+        </div>
+
+        <div style="display: flex; gap: 10px;">
+          <button type="button" class="primary-btn" style="background: #888; flex: 1;" onclick="closePaymentModal()">Cancel</button>
+          <button type="button" class="primary-btn" style="flex: 2;" onclick="confirmPayment()">Submit Payment Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RECEIPT MODAL -->
+  <div id="receipt-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <div class="receipt-header">
+        <h2>Kape Sintahan</h2>
+        <p>E-receipt</p>
+        <p>Thank You for Your Order!</p>
+        <small id="receipt-date"></small>
+      </div>
+      <hr>
+      <div class="receipt-details">
+        <p><strong>Name:</strong> <span id="receipt-name"></span></p>
+        <p><strong>Contact Number:</strong> <span id="receipt-contact"></span></p>
+        <p><strong>Order Mode:</strong> <span id="receipt-mode"></span></p>
+        <p id="receipt-address-container" class="hidden"><strong>Address:</strong> <span id="receipt-address"></span></p>
+        <p><strong>Payment Method:</strong> <span id="receipt-payment"></span></p>
+        <div id="receipt-reference-container" class="hidden" style="background: #f9f9f9; padding: 8px; border-radius: 6px; margin: 6px 0;">
+          <p><strong>Account #:</strong> <span id="receipt-account-num"></span></p>
+          <p><strong>Reference #:</strong> <span id="receipt-ref-num"></span></p>
+        </div>
+        <p id="receipt-note-container" class="hidden"><strong>Customer Note:</strong> <span id="receipt-note"></span></p>
+      </div>
+      <hr>
+      <h4>Items Ordered:</h4>
+      <div id="receipt-items-list"></div>
+      <hr>
+      <div class="receipt-total">
+        <strong>Total Paid:</strong>
+        <strong id="receipt-total-amount">₱0.00</strong>
+      </div>
+      <button type="button" class="primary-btn back-home-btn" onclick="dispatch({ type: 'CLEAR_CART_AND_HOME' })">Back to Home</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
