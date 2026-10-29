@@ -1,11 +1,9 @@
-<!-- UNIT 1 -->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kape Sintahan - Order System</title>
+  <title>Kape Sintahan - Digital Kiosk</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
@@ -31,11 +29,12 @@
         <button type="button" class="nav-btn" id="nav-btn-about" data-page="ABOUT" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ABOUT' })">About</button>
         <button type="button" class="nav-btn" data-page="MENU" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'MENU' })">Menu</button>
         <button type="button" class="nav-btn" id="nav-btn-order" data-page="ORDER" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ORDER' })">Order <span id="nav-cart-count">(0)</span></button>
-        <!-- Dynamic Admin Navigation Buttons -->
+        
+        <!-- Dynamic Admin Navigation Links -->
         <button type="button" class="nav-btn hidden" id="nav-btn-kitchen" data-page="KITCHEN" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'KITCHEN' })">Kitchen Queue</button>
-        <button type="button" class="nav-btn hidden" id="nav-btn-admin" data-page="ADMIN" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ADMIN' })">Pending Orders</button>
-      </nav>
-      <!-- UNIT 7 -->
+        <button type="button" class="nav-btn hidden" id="nav-btn-admin" data-page="ADMIN" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'ADMIN' })">Order History</button>
+        <button type="button" class="nav-btn hidden" id="nav-btn-dashboard" data-page="DASHBOARD" onclick="dispatch({ type: 'NAVIGATE_TO', payload: 'DASHBOARD' })">Dashboard & QA</button>
+        <!-- UNIT 7: Persona Role Bar -->
         <div class="role-bar">
           <label for="role-select">User Role:</label>
           <select id="role-select" onchange="switchUserRole(this.value)">
@@ -44,10 +43,13 @@
           </select>
           <span id="role-badge" class="badge status-pending">CUSTOMER</span>
         </div>
+      </nav>
     </div>
+    
   </header>
 
   <main>
+    <!-- PAGE 1: HOME -->
     <section id="page-home" class="page-content active">
       <div class="hero-card">
         <img src="images/header.jpg" alt="Kape Sintahan Hero Banner" class="banner" id="hero-image">
@@ -62,6 +64,7 @@
       </div>
     </section>
 
+    <!-- PAGE 2: ABOUT -->
     <section id="page-about" class="page-content">
       <div class="about-wrapper">
         <div class="about-hero">
@@ -72,7 +75,7 @@
             At <strong>Kape Sintahan</strong>, we believe every memorable moment begins with warmth, comfort, and good conversation. Born out of passion for artisanal brews and heartfelt connections, our cafe is a haven where dreams are brewed and stories are shared.
           </p>
         </div>
-        
+
         <div class="about-grid">
           <div class="about-card">
             <div class="about-card-icon">✨</div>
@@ -122,6 +125,7 @@
       </div>
     </section>
 
+    <!-- PAGE 3: MENU -->
     <section id="page-menu" class="page-content">
       <div class="menu-header-row">
         <h2>Kape Sintahan Menu</h2>
@@ -164,6 +168,7 @@
       </div>
     </section>
 
+    <!-- PAGE 4: ORDER & CHECKOUT -->
     <section id="page-order" class="page-content">
       <h2>Checkout & Order Details</h2> 
 
@@ -224,7 +229,7 @@
       </div>
     </section>
 
-    <!-- UNIT 6: Kitchen Workflow View Page -->
+    <!-- PAGE 5: KITCHEN QUEUE WORKFLOW (ADMIN) -->
     <section id="page-kitchen" class="page-content">
       <div class="section-header">
         <h2>Kitchen Orders Queue & Status Workflow</h2>
@@ -233,11 +238,11 @@
       <div id="kitchen-orders-list" class="orders-grid"></div>
     </section>
 
-    <!-- UNIT 6 & 10: Store Admin Pending Orders Table Page -->
+    <!-- PAGE 6: ORDER HISTORY TABLE (ADMIN) -->
     <section id="page-admin" class="page-content">
       <div class="section-header">
-        <h2>Store Admin - Pending Customer Orders</h2>
-        <p>Overview of all orders currently waiting for confirmation or processing.</p>
+        <h2>Store Admin - Customer Order History</h2>
+        <p>Complete log of all customer orders across all workflow states.</p>
       </div>
 
       <div class="table-container">
@@ -248,15 +253,119 @@
               <th>Customer</th>
               <th>Items Ordered</th>
               <th>Total Price</th>
+              <th>Mode</th>
               <th>Status</th>
               <th>Time Placed</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody id="admin-pending-orders-body">
-            <!-- JS renders dynamic pending order rows here -->
+            <!-- JS renders dynamic order history rows here -->
           </tbody>
         </table>
+      </div>
+    </section>
+
+    <!-- PAGE 7: UNIT 8, 9 & 10 DASHBOARD METRICS, PERSISTENCE & QA -->
+    <section id="page-dashboard" class="page-content">
+      <div class="section-header">
+        <h2>Store Admin - Metrics, Persistence & Quality Assurance</h2>
+      </div>
+
+      <!-- UNIT 8: Persistence & Data Management Panel -->
+      <div class="qa-section" style="margin-bottom: 1.5rem;">
+        <h3> Persistence & Audit Management</h3>
+        <p style="font-size: 0.9rem; color: #666; margin-bottom: 1rem;">Export/Import JSON state, reset data safely, and inspect system audit logs.</p>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 1rem;">
+          <button type="button" class="primary-btn" onclick="exportDataJSON()">Export JSON State</button>
+          <label class="primary-btn" style="cursor: pointer; display: inline-block; margin: 0;">
+            Import JSON State <input type="file" id="import-file-input" accept=".json" style="display: none;" onchange="importDataJSON(event)">
+          </label>
+          <button type="button" class="primary-btn" style="background: #c53030;" onclick="resetDataStorage()">Reset Data & Storage</button>
+        </div>
+
+        <details class="history-log" style="background: #fdfdfd; padding: 10px; border-radius: 6px; border: 1px solid #e2e8f0;">
+          <summary><b>System Audit Trail Log</b> (<span id="audit-count">0</span> entries)</summary>
+          <div style="max-height: 150px; overflow-y: auto; margin-top: 8px;">
+            <ul id="audit-log-list" style="list-style-type: none; padding: 0;">
+              <li><em>No audit actions recorded yet.</em></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+
+      <!-- UNIT 9: Dynamic KPI Cards -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-label">Total Orders</div>
+          <div class="metric-value" id="kpi-total-orders">0</div>
+          <small class="metric-sub">All-time recorded</small>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Total Revenue</div>
+          <div class="metric-value" id="kpi-total-revenue">₱0.00</div>
+          <small class="metric-sub">Gross sales total</small>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Completion Rate</div>
+          <div class="metric-value" id="kpi-completion-rate">0.0%</div>
+          <small class="metric-sub">Completed vs total orders</small>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Avg Order Value</div>
+          <div class="metric-value" id="kpi-avg-order-value">₱0.00</div>
+          <small class="metric-sub">Average per order</small>
+        </div>
+      </div>
+
+      <!-- UNIT 9: CSS/DOM Visual Summaries -->
+      <div class="analytics-row">
+        <div class="analytics-card">
+          <h3>Order Status Breakdown</h3>
+          <div id="status-distribution-bars" class="bars-container"></div>
+        </div>
+        <div class="analytics-card">
+          <h3>Order Modes Breakdown</h3>
+          <div id="mode-distribution-bars" class="bars-container"></div>
+        </div>
+      </div>
+
+      <!-- UNIT 10: Automated QA & Persistence Test Suite -->
+      <div class="qa-section">
+        <div class="qa-header">
+          <div>
+            <h3> Automated QA & Persistence Test Suite</h3>
+            <p>Run automated checks across Functionality (F), Responsiveness (R), Accessibility (A), Validation (V), Resilience (Persistence), and Code Quality (C).</p>
+          </div>
+          <button type="button" class="primary-btn" onclick="runAutomatedQASuite()">Run System QA Tests</button>
+        </div>
+
+        <div class="qa-score-box">
+          <div>
+            <div class="qa-score-label">Weighted Quality Score (Q)</div>
+            <small>Formula: Q = 0.30F + 0.20R + 0.20A + 0.15V + 0.15C</small>
+          </div>
+          <div class="qa-score-value" id="qa-quality-score">--%</div>
+        </div>
+
+        <div class="table-container" style="margin-top: 1rem;">
+          <table class="admin-orders-table">
+            <thead>
+              <tr>
+                <th>Test ID</th>
+                <th>Dimension</th>
+                <th>Test Name / Target</th>
+                <th>Expected Result</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="qa-test-results-body">
+              <tr>
+                <td colspan="5" class="empty-table-msg">Click "Run System QA Tests" to evaluate system health.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   </main>

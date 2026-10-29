@@ -1,4 +1,4 @@
-/*  UNIT 2 */
+/* UNIT 2: BASE & LAYOUT SYSTEM */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -96,6 +96,7 @@ nav button.active, nav button:hover {
   display: block;
 }
 
+/* HERO SECTION */
 .hero-card {
   position: relative;
   width: 100%;
@@ -160,7 +161,6 @@ nav button.active, nav button:hover {
   line-height: 1.6;
 }
 
-/* Primary Button */
 .primary-btn {
   background: #5A3E2B;
   color: #FFF;
@@ -181,6 +181,7 @@ nav button.active, nav button:hover {
   transform: translateY(-2px);
 }
 
+/* ABOUT SECTION */
 .about-wrapper {
   display: flex;
   flex-direction: column;
@@ -339,6 +340,7 @@ nav button.active, nav button:hover {
   margin-bottom: 15px;
 }
 
+/* MENU SECTION */
 .menu-header-row {
   display: flex;
   flex-direction: column;
@@ -472,12 +474,19 @@ nav button.active, nav button:hover {
 }
 
 .badge {
-  background: #e804b7;
-  color: white;
-  font-size: 11px;
-  padding: 3px 8px;
-  border-radius: 12px;
-  font-weight: bold;
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+#role-badge{
+  background-color: #dbb5f5;
+  color: #000000;
+  border-color:#dbb5f5;
 }
 
 .fav-btn {
@@ -520,7 +529,6 @@ nav button.active, nav button:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -532,11 +540,6 @@ nav button.active, nav button:hover {
   visibility: visible;
   pointer-events: auto;
   transform: translateY(0);
-}
-
-.back-to-top-btn:hover {
-  background: #3A2518;
-  transform: translateY(-3px);
 }
 
 .card-footer {
@@ -714,40 +717,7 @@ nav button.active, nav button:hover {
   border-radius: 8px !important;
 }
 
-@media (min-width: 600px) {
-  .menu-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .about-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .store-info-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .menu-controls {
-    flex-direction: row;
-  }
-
-  .fav-filter-btn {
-    width: auto;
-    white-space: nowrap;
-  }
-
-  .view-orders-bar {
-    flex-direction: row;
-    justify-content: space-between;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 600px;
-  }
-}
-
-
-/* UNIT 6 & 7*/
+/* WORKFLOW & ROLE-AWARE INTERFACE */
 .role-bar {
   display: flex;
   align-items: center;
@@ -773,18 +743,6 @@ nav button.active, nav button:hover {
   cursor: pointer;
 }
 
-/* Base Badge Styling */
-.badge {
-  display: inline-block;
-  padding: 0.25rem 0.5rem;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
-
-/* Unit 6: Workflow Status Colors */
 .status-pending   { background-color: #fff3cd; color: #856404; border: 1px solid #ffeeba; }
 .status-confirmed { background-color: #cce5ff; color: #004085; border: 1px solid #b8daff; }
 .status-preparing { background-color: #e2e3e5; color: #383d41; border: 1px solid #d6d8db; }
@@ -792,7 +750,6 @@ nav button.active, nav button:hover {
 .status-completed { background-color: #d6d8d9; color: #1b1e21; border: 1px solid #c6c8ca; }
 .status-cancelled { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
 
-/* Unit 6: Kitchen Dashboard & Order Cards Layout */
 .orders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -821,11 +778,6 @@ nav button.active, nav button:hover {
   color: #1a202c;
 }
 
-.order-card p {
-  margin: 0.35rem 0;
-  font-size: 0.95rem;
-}
-
 .actions-region {
   display: flex;
   flex-wrap: wrap;
@@ -843,6 +795,8 @@ nav button.active, nav button:hover {
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.15s ease-in-out;
+  margin-bottom: 5px;
+  margin-left:4.8px;
 }
 
 .btn-action-status:hover {
@@ -879,7 +833,7 @@ nav button.active, nav button:hover {
   font-style: italic;
 }
 
-/* Store Admin Table Styling */
+/* ADMIN STORE TABLE STYLING */
 .table-container {
   overflow-x: auto;
   margin-top: 1rem;
@@ -937,51 +891,199 @@ nav button.active, nav button:hover {
   background-color: #c53030;
 }
 
-@media (min-width: 768px) {
-  .hamburger-btn {
-    display: none;
-  }
+/* METRICS DASHBOARD & QUALITY ASSURANCE STYLES */
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
 
+.metric-card {
+  background: #ffffff;
+  border: 1px solid #e0d7ce;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.metric-label {
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #8c6247;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #3a2518;
+  margin: 0.3rem 0;
+}
+
+.metric-sub {
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+.analytics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.analytics-card {
+  background: #ffffff;
+  border: 1px solid #e0d7ce;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.analytics-card h3 {
+  font-size: 1.1rem;
+  color: #3a2518;
+  margin-bottom: 1rem;
+}
+
+.bars-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.bar-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.bar-label {
+  width: 100px;
+  font-weight: 600;
+  color: #4a5568;
+}
+
+.bar-track {
+  flex: 1;
+  height: 12px;
+  background-color: #edf2f7;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.bar-fill {
+  height: 100%;
+  background-color: #5a3e2b;
+  border-radius: 6px;
+  transition: width 0.4s ease;
+}
+
+.bar-val {
+  width: 80px;
+  text-align: right;
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.qa-section {
+  background: #ffffff;
+  border: 1px solid #e0d7ce;
+  border-radius: 10px;
+  padding: 1.25rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.qa-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.qa-score-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f7fafc;
+  border: 1px solid #cbd5e0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.qa-score-label {
+  font-weight: 700;
+  color: #2d3748;
+}
+
+.qa-score-value {
+  font-size: 2rem;
+  font-weight: 800;
+  color: #2d6a4f;
+}
+
+.qa-pass {
+  background-color: #d4edda;
+  color: #155724;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.qa-fail {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 0.2rem 0.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+@media (min-width: 600px) {
+  .menu-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: repeat(3, 1fr); }
+  .store-info-grid { grid-template-columns: repeat(3, 1fr); }
+  .menu-controls { flex-direction: row; }
+  .fav-filter-btn { width: auto; white-space: nowrap; }
+  .view-orders-bar {
+    flex-direction: row;
+    justify-content: space-between;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+  }
+}
+
+@media (min-width: 768px) {
+  .hamburger-btn { display: none; }
   .header-container {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
-
-  .brand-row {
-    width: auto;
-  }
-
+  .brand-row { width: auto; }
   nav {
     display: flex !important;
     flex-direction: row;
     width: auto;
     margin-top: 0;
   }
-
-  nav button {
-    width: auto;
-    padding: 10px 20px;
-  }
-
+  nav button { width: auto; padding: 10px 20px; }
   .menu-header-row {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
   }
-
-  .menu-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .order-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-  }
+  .menu-grid { grid-template-columns: repeat(3, 1fr); }
+  .order-layout { display: grid; grid-template-columns: 1fr 1fr; }
 }
 
 @media (min-width: 1100px) {
-  .menu-grid {
-    grid-template-columns: repeat(4, 1fr);
-  } 
+  .menu-grid { grid-template-columns: repeat(4, 1fr); } 
 }
